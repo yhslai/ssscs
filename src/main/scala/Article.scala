@@ -1,3 +1,3 @@
 class Article(val info: ArticleInfo,
-              val transcript: String,
-              val podcast: Array[Byte])
+              val transcript: Option[String],
+              val podcast: Option[Array[Byte]])

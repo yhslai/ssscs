@@ -13,8 +13,8 @@ class ContentCrawler(config: CrawlingConfig) {
       Article = {
 
     val doc = Jsoup.connect(info.url).get()
-    val transcript = parseTranscript(doc)
-    val podcast = crawlPodcast(doc)
+    val transcript = if(transcript) Some(parseTranscript(doc)) else None
+    val podcast = if(podcast) Some(crawlPodcast(doc)) else None
 
     new Article(info, transcript, podcast)
   }

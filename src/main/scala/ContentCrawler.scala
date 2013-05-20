@@ -6,7 +6,7 @@ class ContentCrawler(config: CrawlingConfig) {
 
   def crawlArticles(infos: Vector[ArticleInfo], config: CrawlingConfig = config):
       Vector[Article] = {
-    infos.map(info => crawlArticle(info, !config.onlyTranscript, !config.onlyPodcast))
+    infos.map(info => crawlArticle(info, !config.onlyPodcast, !config.onlyTranscript))
   }
 
   def crawlArticle(info: ArticleInfo, transcript: Boolean = true, podcast: Boolean = true):

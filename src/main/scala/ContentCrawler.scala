@@ -2,7 +2,12 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import scala.collection.JavaConversions._
 
-class ContentCrawler {
+class ContentCrawler(config: CrawlingConfig) {
+
+  def crawlArticles(infos: Vector[ArticleInfo], config: CrawlingConfig = config):
+      Vector[Article] = {
+    infos.map(info => crawlArticle(info, !config.onlyTranscript, !config.onlyPodcast))
+  }
 
   def crawlArticle(info: ArticleInfo, transcript: Boolean = true, podcast: Boolean = true):
       Article = {
@@ -21,7 +26,7 @@ class ContentCrawler {
     transcript
   }
 
-  def crawlPodcast(doc: Document): Array[Byte] = {
+  private def crawlPodcast(doc: Document): Array[Byte] = {
     def downloadBinary(url: String): Array[Byte] = {
       val response = Jsoup.connect(url).ignoreContentType(true).execute()
       response.bodyAsBytes()

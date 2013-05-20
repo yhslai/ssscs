@@ -9,8 +9,6 @@ object Ssscs {
   def main(args: Array[String]) {
     object Conf extends ScallopConf(args) {
       val count = opt[Int]("count", descr = "How many podcasts to crawl", default = Some(100) )
-      val since = opt[String]("since", descr = "Only crawl the podcasts newer than this date. " +
-                                               "Example: 2012/01/05")
       val until = opt[String]("until", descr = "Only crawl the podcasts older than this date. " +
                                                "Example: 2013/05/12")
 
@@ -19,34 +17,38 @@ object Ssscs {
                                                      "podcasts from '.crawled'")
       val onlyTranscript = opt[Boolean]("only-transcript",
         short = 't',
-        descr = "Only crawl transcripts")
+        descr = "Only crawl transcripts",
+        default = Some(false))
       val onlyPodcast = opt[Boolean]("only-podcast",
         short = 'p',
-        descr = "Only crawl podcasts(mp3)")
+        descr = "Only crawl podcasts(mp3)",
+        default = Some(false))
 
       val outputDir = opt[String]("output-directory",
         short = 'd',
-        descr = "Where to store crawled files"
+        descr = "Where to store crawled files",
+        default = Some("output")
       )
       val format = opt[String]("format",
         descr = "Output format. Support 'text', 'pdf' and 'single-pdf'",
+        default = Some("text"),
         validate = (format) => (List("text", "pdf", "single-pdf").contains(format)))
 
     }
 
     def parseCrawlingConfig(conf: Conf.type): CrawlingConfig = {
       val dateFormat = new SimpleDateFormat("yyyy/MM/dd")
-      val since = conf.since.get.map(str => dateFormat.parse(str))
       val until = conf.until.get.map(str => dateFormat.parse(str))
 
-      CrawlingConfig(conf.count(), since, until, conf.onlyNew())
+      CrawlingConfig(conf.count(), until, conf.onlyNew(),
+                     conf.onlyTranscript(), conf.onlyPodcast())
     }
 
     val crawlingConfig = parseCrawlingConfig(Conf)
-    val crawler = new InfoCrawler(crawlingConfig)
-    val infos = crawler.crawlInfos(crawlingConfig)
+    val infos = new InfoCrawler(crawlingConfig).crawlInfos()
+    val articles = new ContentCrawler(crawlingConfig).crawlArticles(infos)
 
-    println(infos.valueTreeString)
+    println(articles.head.transcript)
   }
 
 }

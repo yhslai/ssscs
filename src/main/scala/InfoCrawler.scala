@@ -4,20 +4,12 @@ import java.util.Date
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
 
-case class CrawlingConfig(itemCount: Int,
-                          since: Option[Date] = None,
-                          until: Option[Date] = None,
-                          onlyNewItem: Boolean = false,
-                          onlyTranscript: Boolean = false,
-                          onlyPodcast: Boolean = false)
-
 class InfoCrawler(config: CrawlingConfig) {
 
-  def crawlInfos(config: CrawlingConfig): Vector[ArticleInfo] = {
+  def crawlInfos(config: CrawlingConfig = config): Vector[ArticleInfo] = {
     val mainListUrl = "http://www.scientificamerican.com/view/utils/Archive.cfc"
     val contentTypeId = "25"
     val farFuture = new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01")
-    val endDate = config.until.getOrElse(farFuture)
     val onceItemCount = 25
     val maxIterationCount = 100
 
@@ -29,7 +21,7 @@ class InfoCrawler(config: CrawlingConfig) {
         .data("method", "loadContentScroll")
         .data("maxRows", onceItemCount.toString)
         .data("contenttype_id", contentTypeId)
-        .data("endDate", dateFormat.format(endDate))
+        .data("endDate", dateFormat.format(farFuture))
         .data("startRow", startRow.toString)
       val doc = connect.get()
 
@@ -37,15 +29,10 @@ class InfoCrawler(config: CrawlingConfig) {
     }
 
     def filterEffective(infos: Vector[ArticleInfo]): Vector[ArticleInfo] = {
-      val effectiveInfos = config.since match {
-        case None => config.until match {
-          case None => infos
-          case Some(date) => infos.filter(info => info.date.before(date))
-        }
-        case Some(date) => infos.filter(info => info.date.after(date))
+      config.until match {
+        case None => infos
+        case Some(date) => infos.filter(info => !info.date.after(date))
       }
-
-      effectiveInfos
     }
 
     def isEnough(infos: Vector[ArticleInfo]): Boolean = {

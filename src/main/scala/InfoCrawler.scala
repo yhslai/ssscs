@@ -7,7 +7,9 @@ import org.jsoup.nodes._
 case class CrawlingConfig(itemCount: Int,
                           since: Option[Date] = None,
                           until: Option[Date] = None,
-                          onlyNewItem: Boolean = false)
+                          onlyNewItem: Boolean = false,
+                          onlyTranscript: Boolean = false,
+                          onlyPodcast: Boolean = false)
 
 class InfoCrawler(config: CrawlingConfig) {
 
@@ -16,7 +18,7 @@ class InfoCrawler(config: CrawlingConfig) {
     val contentTypeId = "25"
     val farFuture = new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01")
     val endDate = config.until.getOrElse(farFuture)
-    val onceItemCount = 100
+    val onceItemCount = 25
     val maxIterationCount = 100
 
     def crawlIter(startRow: Int):
@@ -57,14 +59,14 @@ class InfoCrawler(config: CrawlingConfig) {
     val results = iterator.take(maxIterationCount).toStream
     val result = results.find(vi => isEnough(vi))
 
-    result match {
+    (result match {
       case None => {
         val bestResult = results.last
         println(s"Crawling failed! Can only crawl ${bestResult.size} items.")
         bestResult
       }
       case Some(infos) => infos
-    }
+    }).take(config.itemCount)
   }
 
   private def getInfosFromDoc(doc: Document): Vector[ArticleInfo] = {

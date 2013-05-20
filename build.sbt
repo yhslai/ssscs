@@ -11,3 +11,5 @@ libraryDependencies += "org.mockito" % "mockito-core" % "1.9.5" % "test"
 libraryDependencies += "org.jsoup" % "jsoup" % "1.7.2"
 
 libraryDependencies += "com.github.nikita-volkov" % "sext" % "0.2.3"
+
+libraryDependencies += "org.rogach" %% "scallop" % "0.9.2"

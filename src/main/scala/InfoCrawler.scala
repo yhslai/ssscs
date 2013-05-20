@@ -9,7 +9,7 @@ case class CrawlingConfig(itemCount: Int,
                           until: Option[Date] = None,
                           onlyNewItem: Boolean = false)
 
-class SssCralwer(config: CrawlingConfig) {
+class InfoCrawler(config: CrawlingConfig) {
 
   def crawlInfos(config: CrawlingConfig): Vector[ArticleInfo] = {
     val mainListUrl = "http://www.scientificamerican.com/view/utils/Archive.cfc"

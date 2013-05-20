@@ -9,12 +9,13 @@ class ContentCrawler(config: CrawlingConfig) {
     infos.map(info => crawlArticle(info, !config.onlyPodcast, !config.onlyTranscript))
   }
 
-  def crawlArticle(info: ArticleInfo, transcript: Boolean = true, podcast: Boolean = true):
+  def crawlArticle(info: ArticleInfo,
+                   hasTranscript: Boolean = true, hasPodcast: Boolean = true):
       Article = {
 
     val doc = Jsoup.connect(info.url).get()
-    val transcript = if(transcript) Some(parseTranscript(doc)) else None
-    val podcast = if(podcast) Some(crawlPodcast(doc)) else None
+    val transcript = if(hasTranscript) Some(parseTranscript(doc)) else None
+    val podcast = if(hasPodcast) Some(crawlPodcast(doc)) else None
 
     new Article(info, transcript, podcast)
   }

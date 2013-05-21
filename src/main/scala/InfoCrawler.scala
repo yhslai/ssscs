@@ -64,7 +64,11 @@ class InfoCrawler(config: CrawlingConfig) {
 
       val dateStr = li.select(".datestamp").text
       val dateFormat = new java.text.SimpleDateFormat("MMM d, yyyy")
-      val date = dateFormat.parse(dateStr)
+      val date =
+        try dateFormat.parse(dateStr)
+        catch {
+          case e: java.text.ParseException => new Date()
+        }
 
       ArticleInfo(url, title, date)
     }

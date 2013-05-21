@@ -5,9 +5,10 @@ import sext._
 
 object Ssscs {
 
-
   def main(args: Array[String]) {
     object Conf extends ScallopConf(args) {
+      version("ssscs 0.1v")
+
       val count = opt[Int]("count", descr = "How many podcasts to crawl", default = Some(100) )
       val until = opt[String]("until", descr = "Only crawl the podcasts older than this date. " +
                                                "Example: 2013/05/12")

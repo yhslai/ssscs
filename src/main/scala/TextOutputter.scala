@@ -8,16 +8,18 @@ class TextOutputter extends Outputter {
   }
 
   private def outputSingleToDir(article: Article, dir: File) {
-    val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
-    val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
-    val textFileName = s"${formattedDate}_$underscorizedTitle.txt"
-    val textFilePath = s"${dir.getPath}/$textFileName"
+    article.transcript match {
+      case Some(transcript) => {
+        val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
+        val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
+        val textFileName = s"${formattedDate}_$underscorizedTitle.txt"
+        val textFilePath = s"${dir.getPath}/$textFileName"
 
-    FileUtils.printToFile(new java.io.File(textFilePath))(p =>
-      article.transcript match {
-        case Some(transcript) => p.print(transcript)
-        case None =>
+        FileUtils.printToFile(new java.io.File(textFilePath))(p =>
+          p.print(transcript)
+        )
       }
-    )
+      case None =>
+    }
   }
 }

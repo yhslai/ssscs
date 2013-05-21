@@ -1,6 +1,12 @@
+import AssemblyKeys._
+
+assemblySettings
+
+jarName in assembly := "ssscs.jar"
+
 name := "ssscs"
- 
-version := "1.0"
+
+version := "0.1"
  
 scalaVersion := "2.10.1"
  

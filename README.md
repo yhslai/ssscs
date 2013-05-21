@@ -7,7 +7,7 @@
 
 It's a cralwer to download the awesome podcast [60-Second Science](http://www.scientificamerican.com/), including the transcripts and audios, into your local machine. If you like it can crawl 1000 episodes at once and output a single well-formatted PDF transcript.
 
-![PDF output file](http://i.imgur.com/cXqy26O.png)
+![PDF output file](http://i.imgur.com/cXqy26O.png?1)
 
 ## Usage
 
@@ -32,4 +32,5 @@ Or, you can download the [packaged jar](https://mega.co.nz/#!i0xTXJgJ!VlCIajUm_V
 ## License
 
 Copyright (c) 2013-2013, Raincole Lai
+
 Published under The MIT License, see LICENSE

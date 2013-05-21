@@ -12,11 +12,6 @@ object Ssscs {
       val until = opt[String]("until", descr = "Only crawl the podcasts older than this date. " +
                                                "Example: 2013/05/12")
 
-      val onlyNew = opt[Boolean]("only-new",
-        short = 'n',
-        descr = "Only crawl the podcasts that haven't been " +
-                "crawled. It reads the list of crawled " +
-                "podcasts from '.crawled'")
       val onlyTranscript = opt[Boolean]("only-transcript",
         short = 't',
         descr = "Only crawl transcripts",
@@ -42,7 +37,7 @@ object Ssscs {
       val dateFormat = new SimpleDateFormat("yyyy/MM/dd")
       val until = conf.until.get.map(str => dateFormat.parse(str))
 
-      CrawlingConfig(conf.count(), until, conf.onlyNew(),
+      CrawlingConfig(conf.count(), until,
                      conf.onlyTranscript(), conf.onlyPodcast())
     }
 

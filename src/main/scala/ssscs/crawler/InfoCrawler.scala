@@ -1,8 +1,11 @@
+package ssscs.crawler
+
 import scala.collection.JavaConversions._
 import java.text.SimpleDateFormat
 import java.util.Date
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
+import ssscs.{CrawlingConfig, ArticleInfo}
 
 class InfoCrawler(config: CrawlingConfig) {
 

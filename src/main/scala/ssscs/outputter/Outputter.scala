@@ -1,4 +1,7 @@
+package ssscs.outputter
+
 import java.io.File
+import ssscs.Article
 
 trait Outputter {
   def output(articles: IndexedSeq[Article], dirPath: String) {

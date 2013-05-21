@@ -1,7 +1,9 @@
+package ssscs
+
 import java.text.SimpleDateFormat
-import java.util.Date
-import org.rogach.scallop.{ScallopConf, ScallopOption}
-import sext._
+import org.rogach.scallop.ScallopConf
+import ssscs.crawler._
+import ssscs.outputter._
 
 object Ssscs {
 

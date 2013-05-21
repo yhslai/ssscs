@@ -1,7 +1,10 @@
+package ssscs.outputter
+
 import com.itextpdf.text.Document
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.{FileOutputStream, File}
 import java.text.SimpleDateFormat
+import ssscs.{Article, PdfUtils}
 
 class SinglePdfOutputter extends Outputter {
   // May need refactor

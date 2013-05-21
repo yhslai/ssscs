@@ -1,6 +1,9 @@
+package ssscs.crawler
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import scala.collection.JavaConversions._
+import ssscs.{CrawlingConfig, ArticleInfo, Article}
 
 class ContentCrawler(config: CrawlingConfig) {
 
@@ -10,8 +13,10 @@ class ContentCrawler(config: CrawlingConfig) {
   }
 
   def crawlArticle(info: ArticleInfo,
-                   hasTranscript: Boolean = true, hasPodcast: Boolean = true):
+      hasTranscript: Boolean = true, hasPodcast: Boolean = true):
       Article = {
+
+    println(s"""Start crawling \"${info.title}\"...""")
 
     val doc = Jsoup.connect(info.url).get()
     val transcript = if(hasTranscript) Some(parseTranscript(doc)) else None

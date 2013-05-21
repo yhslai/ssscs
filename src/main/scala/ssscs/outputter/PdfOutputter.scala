@@ -1,11 +1,11 @@
-import cc.raintomorrow.FileUtils
-import com.itextpdf.text.pdf.draw.{DottedLineSeparator, LineSeparator}
+package ssscs.outputter
+
 import com.itextpdf.text._
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.{FileOutputStream, File}
 import java.text.SimpleDateFormat
-import java.util.Date
 import scala.Some
+import ssscs.{Article, PdfUtils}
 
 
 class PdfOutputter extends Outputter {

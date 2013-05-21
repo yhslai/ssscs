@@ -1,7 +1,8 @@
+package ssscs
+
 import com.itextpdf.text._
 import java.text.SimpleDateFormat
 import java.util.Date
-import javax.swing.GroupLayout.Alignment
 
 object PdfUtils {
   val TitleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD)

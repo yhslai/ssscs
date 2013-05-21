@@ -1,3 +1,5 @@
+package ssscs
+
 import java.util.Date
 
 case class CrawlingConfig(itemCount: Int,

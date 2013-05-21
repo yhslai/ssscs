@@ -36,4 +36,8 @@ object PdfUtils {
       doc.add(p)
     })
   }
+
+  def addPageBreak(doc: Document) {
+    doc.newPage()
+  }
 }

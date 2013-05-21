@@ -11,7 +11,7 @@ class TextOutputter extends Outputter {
     article.transcript match {
       case Some(transcript) => {
         val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
-        val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
+        val formattedDate = new SimpleDateFormat("yyyy_MM_dd").format(article.info.date)
         val textFileName = s"${formattedDate}_$underscorizedTitle.txt"
         val textFilePath = s"${dir.getPath}/$textFileName"
 

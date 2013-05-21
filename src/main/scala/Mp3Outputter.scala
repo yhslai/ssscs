@@ -11,7 +11,7 @@ class Mp3Outputter extends Outputter {
     article.podcast match {
       case Some(podcast) => {
         val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
-        val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
+        val formattedDate = new SimpleDateFormat("yyyy_MM_dd").format(article.info.date)
         val mp3FileName = s"${formattedDate}_$underscorizedTitle.mp3"
         val mp3FilePath = s"${dir.getPath}/$mp3FileName"
 

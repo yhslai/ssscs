@@ -28,7 +28,7 @@ object Ssscs {
       )
       val format = opt[String]("format",
         descr = "Output format. Support 'txt', 'pdf' and 'single-pdf'",
-        default = Some("text"),
+        default = Some("txt"),
         validate = (format) => (List("text", "pdf", "single-pdf").contains(format)))
 
     }

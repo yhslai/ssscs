@@ -44,9 +44,19 @@ object Ssscs {
                      conf.onlyTranscript(), conf.onlyPodcast())
     }
 
+    def parseOutputConfig(conf: Conf.type): OutputConfig = {
+      OutputConfig(conf.outputDir(), conf.format())
+    }
+
     val crawlingConfig = parseCrawlingConfig(Conf)
     val infos = new InfoCrawler(crawlingConfig).crawlInfos()
     val articles = new ContentCrawler(crawlingConfig).crawlArticles(infos)
+
+    val outputConfig = parseOutputConfig(Conf)
+
+    articles.foreach(a => {
+      new Mp3Outputter().output(a, outputConfig.dirPath)
+    })
 
     println(articles.head.transcript)
   }

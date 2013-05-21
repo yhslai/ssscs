@@ -58,8 +58,6 @@ object Ssscs {
       case "single-pdf" => new SinglePdfOutputter().output(articles, outputConfig.dirPath)
       case format => println(s"Unsupported format: ${format}")
     }
-
-    println(articles.head.transcript)
   }
 
 }

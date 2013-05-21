@@ -56,6 +56,7 @@ object Ssscs {
 
     articles.foreach(a => {
       new Mp3Outputter().output(a, outputConfig.dirPath)
+      new TextOutputter().output(a, outputConfig.dirPath)
     })
 
     println(articles.head.transcript)

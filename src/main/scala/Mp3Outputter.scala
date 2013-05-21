@@ -1,25 +1,19 @@
+import cc.raintomorrow.FileUtils
 import java.io.{FileOutputStream, File}
 import java.text.SimpleDateFormat
 
 class Mp3Outputter extends Outputter {
-  def output(article: Article, dirPath: String) {
-    checkOrCreateDir(dirPath) match {
-      case Some(dir) => {
-        val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
-        val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
-        val mp3FileName = s"${formattedDate}_$underscorizedTitle.mp3"
-        val mp3FilePath = s"${dir.getPath}/$mp3FileName"
+  override protected def outputToDir(article: Article, dir: File) {
+    val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
+    val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
+    val mp3FileName = s"${formattedDate}_$underscorizedTitle.mp3"
+    val mp3FilePath = s"${dir.getPath}/$mp3FileName"
 
-        val out = new FileOutputStream(new java.io.File(mp3FilePath))
-        try {
-          article.podcast match {
-            case Some(podcast) => out.write(podcast)
-            case None =>
-          }
-        }
-        finally out.close()
+    FileUtils.streamToFile(new File(mp3FilePath))(s => {
+      article.podcast match {
+        case Some(podcast) => s.write(podcast)
+        case None =>
       }
-      case None =>
-    }
+    })
   }
 }

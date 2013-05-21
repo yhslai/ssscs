@@ -3,7 +3,11 @@ import java.io.{FileOutputStream, File}
 import java.text.SimpleDateFormat
 
 class Mp3Outputter extends Outputter {
-  override protected def outputToDir(article: Article, dir: File) {
+  override protected def outputToDir(articles: IndexedSeq[Article], dir: File) {
+    articles.foreach(a => outputSingleToDir(a, dir))
+  }
+
+  private def outputSingleToDir(article: Article, dir: File) {
     val underscorizedTitle = article.info.title.replaceAll("\\s", "_")
     val formattedDate = new SimpleDateFormat("yyyyMMdd").format(article.info.date)
     val mp3FileName = s"${formattedDate}_$underscorizedTitle.mp3"

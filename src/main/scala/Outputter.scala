@@ -1,16 +1,16 @@
 import java.io.File
 
 trait Outputter {
-  def output(article: Article, dirPath: String) {
+  def output(articles: IndexedSeq[Article], dirPath: String) {
     checkOrCreateDir(dirPath) match {
       case Some(dir) => {
-        outputToDir(article, dir)
+        outputToDir(articles, dir)
       }
       case None =>
     }
   }
 
-  private def checkOrCreateDir(dirPath: String): Option[File] = {
+  protected def checkOrCreateDir(dirPath: String): Option[File] = {
     val dir = new File(dirPath)
     if(!dir.exists) dir.mkdir()
     else if(!dir.isDirectory) {
@@ -20,5 +20,5 @@ trait Outputter {
     Some(dir)
   }
 
-  protected def outputToDir(article: Article, dir: File)
+  protected def outputToDir(articles: IndexedSeq[Article], dir: File)
 }

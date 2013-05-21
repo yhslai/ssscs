@@ -32,7 +32,7 @@ object Ssscs {
         default = Some("output")
       )
       val format = opt[String]("format",
-        descr = "Output format. Support 'text', 'pdf' and 'single-pdf'",
+        descr = "Output format. Support 'txt', 'pdf' and 'single-pdf'",
         default = Some("text"),
         validate = (format) => (List("text", "pdf", "single-pdf").contains(format)))
 
@@ -56,10 +56,13 @@ object Ssscs {
 
     val outputConfig = parseOutputConfig(Conf)
 
-    articles.foreach(a => {
-      new Mp3Outputter().output(a, outputConfig.dirPath)
-      new TextOutputter().output(a, outputConfig.dirPath)
-    })
+    new Mp3Outputter().output(articles, outputConfig.dirPath)
+    outputConfig.format match {
+      case "text" | "txt" => new TextOutputter().output(articles, outputConfig.dirPath)
+      case "pdf" => new PdfOutputter().output(articles, outputConfig.dirPath)
+      case "single-pdf" => new SinglePdfOutputter().output(articles, outputConfig.dirPath)
+      case format => println(s"Unsupported format: ${format}")
+    }
 
     println(articles.head.transcript)
   }
